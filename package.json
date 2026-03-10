@@ -1,5 +1,5 @@
 {
-  "name": "react-ssr-seo",
+  "name": "@tonmoy1996/react-ssr-seo",
   "version": "1.0.0",
   "description": "Framework-agnostic SEO utilities, metadata builders, structured data helpers, and React components for SSR applications",
   "keywords": [
