@@ -79,7 +79,9 @@
     "lint": "tsc --noEmit",
     "prepublishOnly": "npm run build",
     "clean": "rm -rf dist",
-    "demo": "tsx examples/dev-server/server.tsx"
+    "demo": "tsx examples/dev-server/server.tsx",
+    "demo:build": "tsup examples/dev-server/server.tsx --format esm --platform node --out-dir demo-dist --no-splitting --no-dts --external express --external react --external react-dom --external react/jsx-runtime",
+    "demo:start": "node demo-dist/server.js"
   },
   "peerDependencies": {
     "react": ">=18.0.0"

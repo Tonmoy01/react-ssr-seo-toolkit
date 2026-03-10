@@ -35,80 +35,151 @@ export function Layout({ children, pageConfig, schemas, activeRoute }: LayoutPro
         />
       </head>
       <body>
-        {/* Navigation */}
-        <nav className="navbar">
-          <div className="nav-inner">
-            <a href="/" className="nav-brand">
-              <span className="nav-logo">{"{ }"}</span>
-              <span>react-ssr-seo</span>
-            </a>
-            <div className="nav-links">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className={`nav-link${activeRoute === link.href ? " nav-link-active" : ""}`}
-                >
-                  {link.label}
-                </a>
-              ))}
+        <div id="root">
+          {/* Navigation */}
+          <nav className="navbar">
+            <div className="nav-inner">
+              <a href="/" className="nav-brand">
+                <span className="nav-logo">{"{ }"}</span>
+                <span>react-ssr-seo</span>
+              </a>
+              <div className="nav-links">
+                {navLinks.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    className={`nav-link${activeRoute === link.href ? " nav-link-active" : ""}`}
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+              <a
+                href="https://github.com/Tonmoy01/react-ssr-seo"
+                className="nav-github"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                GitHub
+              </a>
             </div>
-            <a
-              href="https://github.com/Tonmoy01/react-ssr-seo"
-              className="nav-github"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub
-            </a>
-          </div>
-        </nav>
+          </nav>
 
-        {/* Main Content */}
-        <main>{children}</main>
+          {/* Main Content */}
+          <main>{children}</main>
 
-        {/* Footer */}
-        <footer className="site-footer">
-          <div className="container">
-            <div className="footer-grid">
-              <div className="footer-col">
-                <h4 className="footer-heading">react-ssr-seo</h4>
-                <p className="footer-text">
-                  Framework-agnostic SEO utilities for React SSR applications.
-                  Zero dependencies. Fully typed. SSR-safe.
+          {/* Footer */}
+          <footer className="site-footer">
+            <div className="container">
+              <div className="footer-grid">
+                <div className="footer-col">
+                  <h4 className="footer-heading">react-ssr-seo</h4>
+                  <p className="footer-text">
+                    Framework-agnostic SEO utilities for React SSR applications.
+                    Zero dependencies. Fully typed. SSR-safe.
+                  </p>
+                </div>
+                <div className="footer-col">
+                  <h4 className="footer-heading">Demo Pages</h4>
+                  <div className="footer-links">
+                    <a href="/article">Article SEO</a>
+                    <a href="/product">Product SEO</a>
+                    <a href="/faq">FAQ Schema</a>
+                    <a href="/noindex">No-Index</a>
+                  </div>
+                </div>
+                <div className="footer-col">
+                  <h4 className="footer-heading">Resources</h4>
+                  <div className="footer-links">
+                    <a href="/getting-started">Getting Started</a>
+                    <a href="/api">API Reference</a>
+                    <a href="https://github.com/Tonmoy01/react-ssr-seo" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
+                    <a href="https://www.npmjs.com/package/react-ssr-seo" target="_blank" rel="noopener noreferrer">npm Package</a>
+                  </div>
+                </div>
+              </div>
+              <div className="footer-bottom">
+                <p>MIT License. Built for the React SSR ecosystem.</p>
+                <p className="footer-hint">
+                  Right-click anywhere and select "View Page Source" to inspect all SEO tags rendered by this library.
                 </p>
               </div>
-              <div className="footer-col">
-                <h4 className="footer-heading">Demo Pages</h4>
-                <div className="footer-links">
-                  <a href="/article">Article SEO</a>
-                  <a href="/product">Product SEO</a>
-                  <a href="/faq">FAQ Schema</a>
-                  <a href="/noindex">No-Index</a>
-                </div>
-              </div>
-              <div className="footer-col">
-                <h4 className="footer-heading">Resources</h4>
-                <div className="footer-links">
-                  <a href="/getting-started">Getting Started</a>
-                  <a href="/api">API Reference</a>
-                  <a href="https://github.com/Tonmoy01/react-ssr-seo" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
-                  <a href="https://www.npmjs.com/package/react-ssr-seo" target="_blank" rel="noopener noreferrer">npm Package</a>
-                </div>
-              </div>
             </div>
-            <div className="footer-bottom">
-              <p>MIT License. Built for the React SSR ecosystem.</p>
-              <p className="footer-hint">
-                Right-click anywhere and select "View Page Source" to inspect all SEO tags rendered by this library.
-              </p>
-            </div>
-          </div>
-        </footer>
+          </footer>
+        </div>
+        <script dangerouslySetInnerHTML={{ __html: CLIENT_NAV_SCRIPT }} />
       </body>
     </html>
   );
 }
+
+/* ── Client-side navigation (PJAX-style) ────────────────────── */
+const CLIENT_NAV_SCRIPT = `
+(function() {
+  function navigate(url) {
+    fetch(url)
+      .then(function(r) { return r.text(); })
+      .then(function(html) {
+        var doc = new DOMParser().parseFromString(html, 'text/html');
+        document.title = doc.title;
+
+        // Update head meta tags (SEO tags, etc.)
+        var oldHead = document.head;
+        var newHead = doc.head;
+        // Remove old meta/link tags (keep style and script)
+        Array.from(oldHead.querySelectorAll('meta, link[rel="canonical"], link[rel="alternate"]'))
+          .forEach(function(el) { el.remove(); });
+        // Add new meta/link tags
+        Array.from(newHead.querySelectorAll('meta, link[rel="canonical"], link[rel="alternate"]'))
+          .forEach(function(el) { oldHead.appendChild(el); });
+
+        // Swap page content
+        var newRoot = doc.getElementById('root');
+        if (newRoot) {
+          document.getElementById('root').innerHTML = newRoot.innerHTML;
+        }
+
+        // Scroll to top
+        window.scrollTo(0, 0);
+      });
+  }
+
+  // Intercept internal link clicks
+  document.addEventListener('click', function(e) {
+    var link = e.target.closest('a[href]');
+    if (!link) return;
+    // Skip external links, new tabs, and modified clicks
+    if (link.target === '_blank') return;
+    if (e.ctrlKey || e.metaKey || e.shiftKey) return;
+    var url = new URL(link.href, location.origin);
+    if (url.origin !== location.origin) return;
+
+    // Handle hash/anchor links — manually scroll to target
+    var href = link.getAttribute('href');
+    if ((url.pathname === location.pathname && url.hash) || (href && href.charAt(0) === '#')) {
+      e.preventDefault();
+      var hash = url.hash || href;
+      var el = document.getElementById(hash.substring(1));
+      if (el) {
+        var top = el.getBoundingClientRect().top + window.pageYOffset - 80;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+        history.replaceState(null, '', url.pathname + hash);
+      }
+      return;
+    }
+
+    e.preventDefault();
+    if (url.pathname === location.pathname) return;
+    history.pushState(null, '', url.pathname);
+    navigate(url.pathname);
+  });
+
+  // Handle browser back/forward
+  window.addEventListener('popstate', function() {
+    navigate(location.pathname);
+  });
+})();
+`;
 
 /* ── CSS ─────────────────────────────────────────────────────── */
 const CSS_STYLES = `
@@ -659,6 +730,7 @@ code {
 
 .demo-section {
   margin-bottom: 2.5rem;
+  scroll-margin-top: 5rem;
 }
 
 .demo-section-title {
