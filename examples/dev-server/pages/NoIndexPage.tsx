@@ -101,7 +101,7 @@ export function NoIndexPage() {
   mergeSEOConfig,
   noIndex,
   SEOHead,
-} from "react-ssr-seo";
+} from "react-ssr-seo-toolkit";
 import { siteConfig } from "../config/seo";
 
 const pageConfig = mergeSEOConfig(siteConfig, {
@@ -122,7 +122,7 @@ const pageConfig = mergeSEOConfig(siteConfig, {
             All Robots Options
           </h2>
           <p className="section-subtitle">
-            react-ssr-seo provides helper functions and fine-grained control over robots directives.
+            react-ssr-seo-toolkit provides helper functions and fine-grained control over robots directives.
           </p>
 
           <div className="card card-elevated" style={{ overflowX: "auto" }}>
@@ -186,7 +186,7 @@ const pageConfig = mergeSEOConfig(siteConfig, {
               <span className="code-header-title">Fine-grained robots control</span>
               <span className="code-header-lang">TypeScript</span>
             </div>
-            <pre>{`import { mergeSEOConfig, noIndexNoFollow } from "react-ssr-seo";
+            <pre>{`import { mergeSEOConfig, noIndexNoFollow } from "react-ssr-seo-toolkit";
 
 // Option 1: Use the noIndexNoFollow helper
 const loginPage = mergeSEOConfig(siteConfig, {

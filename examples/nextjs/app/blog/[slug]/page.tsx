@@ -4,7 +4,7 @@
  * In Next.js App Router, you export a `generateMetadata` function
  * and use the built-in <Script> or inline <script> for JSON-LD.
  *
- * This example shows how to use react-ssr-seo to build
+ * This example shows how to use react-ssr-seo-toolkit to build
  * the metadata object and JSON-LD schemas.
  */
 
@@ -19,7 +19,7 @@ import {
   createBreadcrumbSchema,
   mergeSEOConfig,
   safeJsonLdSerialize,
-} from "react-ssr-seo";
+} from "react-ssr-seo-toolkit";
 import { siteConfig, SITE_URL } from "../../../config/seo.js";
 
 // ─── Page-level metadata (Next.js generateMetadata) ──────────

@@ -118,7 +118,7 @@ export function ArticlePage() {
             SEO Tags Generated
           </h2>
           <p className="section-subtitle">
-            View Page Source to verify these. Here's what react-ssr-seo renders for this page:
+            View Page Source to verify these. Here's what react-ssr-seo-toolkit renders for this page:
           </p>
 
           <div className="code-block">
@@ -213,7 +213,7 @@ export function ArticlePage() {
   createBreadcrumbSchema,
   SEOHead,
   JsonLd,
-} from "react-ssr-seo";
+} from "react-ssr-seo-toolkit";
 import { siteConfig, SITE_URL } from "../config/seo";
 
 // 1. Merge page config with site defaults

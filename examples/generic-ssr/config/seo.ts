@@ -1,4 +1,4 @@
-import { createSEOConfig } from "react-ssr-seo";
+import { createSEOConfig } from "react-ssr-seo-toolkit";
 
 export const siteConfig = createSEOConfig({
   titleTemplate: "%s | MyShop",

@@ -1,11 +1,11 @@
 import { createSEOConfig } from "../../../src/index.js";
 
 export const siteConfig = createSEOConfig({
-  titleTemplate: "%s | react-ssr-seo",
+  titleTemplate: "%s | react-ssr-seo-toolkit",
   description:
     "Framework-agnostic SEO utilities for React SSR applications. Meta tags, Open Graph, JSON-LD, and more.",
   openGraph: {
-    siteName: "react-ssr-seo",
+    siteName: "react-ssr-seo-toolkit",
     type: "website",
     locale: "en_US",
   },

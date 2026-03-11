@@ -9,7 +9,7 @@ import { Layout } from "../components/Layout.js";
 
 const faqs = [
   {
-    question: "What is react-ssr-seo?",
+    question: "What is react-ssr-seo-toolkit?",
     answer:
       "A framework-agnostic SEO utility library for React SSR applications. It provides meta tag builders, Open Graph & Twitter Card support, JSON-LD structured data generators, and React components — all with zero dependencies and full TypeScript support.",
   },
@@ -46,7 +46,7 @@ const faqs = [
   {
     question: "Can I use it without React?",
     answer:
-      'The core builder functions (buildTitle, buildOpenGraph, buildCanonicalUrl, etc.) and schema generators work without React. Import from "react-ssr-seo/schema" for tree-shaken schema-only usage.',
+      'The core builder functions (buildTitle, buildOpenGraph, buildCanonicalUrl, etc.) and schema generators work without React. Import from "react-ssr-seo-toolkit/schema" for tree-shaken schema-only usage.',
   },
 ];
 
@@ -54,7 +54,7 @@ export function FAQPage() {
   const pageConfig = mergeSEOConfig(siteConfig, {
     title: "FAQ",
     description:
-      "Frequently asked questions about react-ssr-seo — installation, framework support, schemas, and more.",
+      "Frequently asked questions about react-ssr-seo-toolkit — installation, framework support, schemas, and more.",
     canonical: buildCanonicalUrl(SITE_URL, "/faq"),
   });
 
@@ -111,7 +111,7 @@ export function FAQPage() {
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "What is react-ssr-seo?",
+      "name": "What is react-ssr-seo-toolkit?",
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "A framework-agnostic SEO utility library..."
@@ -161,13 +161,13 @@ export function FAQPage() {
   createFAQSchema,
   SEOHead,
   JsonLd,
-} from "react-ssr-seo";
+} from "react-ssr-seo-toolkit";
 import { siteConfig, SITE_URL } from "../config/seo";
 
 // Define your FAQ data
 const faqs = [
   {
-    question: "What is react-ssr-seo?",
+    question: "What is react-ssr-seo-toolkit?",
     answer: "A framework-agnostic SEO utility library...",
   },
   {
@@ -180,7 +180,7 @@ const faqs = [
 // Create page config
 const pageConfig = mergeSEOConfig(siteConfig, {
   title: "FAQ",
-  description: "Frequently asked questions about react-ssr-seo.",
+  description: "Frequently asked questions about react-ssr-seo-toolkit.",
   canonical: buildCanonicalUrl(SITE_URL, "/faq"),
 });
 

@@ -2,24 +2,24 @@
 
 <br />
 
-<img src="https://img.shields.io/badge/react--ssr--seo-v1.0.1-000000?style=for-the-badge&labelColor=000000" alt="react-ssr-seo" />
+<img src="https://img.shields.io/badge/react--ssr--seo--toolkit-v1.0.2-000000?style=for-the-badge&labelColor=000000" alt="react-ssr-seo-toolkit" />
 
 <br />
 <br />
 
-# `react-ssr-seo`
+# `react-ssr-seo-toolkit`
 
 ### The Complete SEO Toolkit for React SSR Applications
 
 <br />
 
-[![npm](https://img.shields.io/npm/v/react-ssr-seo?style=for-the-badge&logo=npm&logoColor=white&color=CB3837)](https://www.npmjs.com/package/react-ssr-seo)
+[![npm](https://img.shields.io/npm/v/react-ssr-seo-toolkit?style=for-the-badge&logo=npm&logoColor=white&color=CB3837)](https://www.npmjs.com/package/react-ssr-seo-toolkit)
 &nbsp;
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 &nbsp;
-[![License](https://img.shields.io/npm/l/react-ssr-seo?style=for-the-badge&color=blue)](./LICENSE)
+[![License](https://img.shields.io/npm/l/react-ssr-seo-toolkit?style=for-the-badge&color=blue)](./LICENSE)
 &nbsp;
-[![Bundle](https://img.shields.io/bundlephobia/minzip/react-ssr-seo?style=for-the-badge&label=size&color=success)](https://bundlephobia.com/package/react-ssr-seo)
+[![Bundle](https://img.shields.io/bundlephobia/minzip/react-ssr-seo-toolkit?style=for-the-badge&label=size&color=success)](https://bundlephobia.com/package/react-ssr-seo-toolkit)
 
 <br />
 
@@ -95,12 +95,12 @@ All in one package. Zero dependencies. Fully typed. SSR-safe.
 ### 1. Install
 
 ```bash
-npm install react-ssr-seo
+npm install react-ssr-seo-toolkit
 ```
 
 ```bash
 # or
-pnpm add react-ssr-seo    # yarn add react-ssr-seo    # bun add react-ssr-seo
+pnpm add react-ssr-seo-toolkit    # yarn add react-ssr-seo-toolkit    # bun add react-ssr-seo-toolkit
 ```
 
 > **Requires:** `react >= 18.0.0` as peer dependency
@@ -110,7 +110,7 @@ pnpm add react-ssr-seo    # yarn add react-ssr-seo    # bun add react-ssr-seo
 ### 2. Create Site Config (once)
 
 ```tsx
-import { createSEOConfig } from "react-ssr-seo";
+import { createSEOConfig } from "react-ssr-seo-toolkit";
 
 const siteConfig = createSEOConfig({
   titleTemplate: "%s | MySite",              // auto-appends " | MySite" to every page title
@@ -124,7 +124,7 @@ const siteConfig = createSEOConfig({
 ### 3. Add to Any Page
 
 ```tsx
-import { SEOHead, mergeSEOConfig, buildCanonicalUrl } from "react-ssr-seo";
+import { SEOHead, mergeSEOConfig, buildCanonicalUrl } from "react-ssr-seo-toolkit";
 
 function AboutPage() {
   const seo = mergeSEOConfig(siteConfig, {
@@ -163,15 +163,12 @@ function AboutPage() {
 
 ### Blog / Article Page
 
-<details open>
-<summary><strong>Click to expand full example</strong></summary>
-
 ```tsx
 import {
   SEOHead, JsonLd,
   createSEOConfig, mergeSEOConfig, buildCanonicalUrl,
   createArticleSchema, createBreadcrumbSchema,
-} from "react-ssr-seo";
+} from "react-ssr-seo-toolkit";
 
 // Site config (create once, reuse everywhere)
 const siteConfig = createSEOConfig({
@@ -246,10 +243,7 @@ function BlogPostPage() {
 }
 ```
 
-</details>
-
-<details>
-<summary><strong>See the HTML output this generates</strong></summary>
+**HTML output this generates:**
 
 ```html
 <head>
@@ -289,8 +283,6 @@ function BlogPostPage() {
 </head>
 ```
 
-</details>
-
 <br />
 
 ---
@@ -299,15 +291,12 @@ function BlogPostPage() {
 
 ### E-Commerce Product Page
 
-<details open>
-<summary><strong>Click to expand full example</strong></summary>
-
 ```tsx
 import {
   SEOHead, JsonLd,
   createSEOConfig, mergeSEOConfig, buildCanonicalUrl,
   createProductSchema, createBreadcrumbSchema,
-} from "react-ssr-seo";
+} from "react-ssr-seo-toolkit";
 
 const siteConfig = createSEOConfig({
   titleTemplate: "%s | Acme Store",
@@ -382,8 +371,6 @@ function ProductPage() {
 }
 ```
 
-</details>
-
 <br />
 
 ---
@@ -392,14 +379,11 @@ function ProductPage() {
 
 ### FAQ Page
 
-<details open>
-<summary><strong>Click to expand full example</strong></summary>
-
 ```tsx
 import {
   SEOHead, JsonLd,
   mergeSEOConfig, buildCanonicalUrl, createFAQSchema,
-} from "react-ssr-seo";
+} from "react-ssr-seo-toolkit";
 
 function FAQPage() {
   const faqs = [
@@ -434,8 +418,6 @@ function FAQPage() {
 }
 ```
 
-</details>
-
 <br />
 
 ---
@@ -444,15 +426,12 @@ function FAQPage() {
 
 ### Homepage (Organization + Website Schema)
 
-<details>
-<summary><strong>Click to expand full example</strong></summary>
-
 ```tsx
 import {
   SEOHead, JsonLd,
   mergeSEOConfig,
   createOrganizationSchema, createWebsiteSchema,
-} from "react-ssr-seo";
+} from "react-ssr-seo-toolkit";
 
 function HomePage() {
   const seo = mergeSEOConfig(siteConfig, {
@@ -506,8 +485,6 @@ function HomePage() {
 }
 ```
 
-</details>
-
 <br />
 
 ---
@@ -545,7 +522,7 @@ const seo = mergeSEOConfig(siteConfig, {
 ### No-Index Pages (Admin, Login, Drafts)
 
 ```tsx
-import { mergeSEOConfig, noIndex, noIndexNoFollow } from "react-ssr-seo";
+import { mergeSEOConfig, noIndex, noIndexNoFollow } from "react-ssr-seo-toolkit";
 
 // Login page: don't index, but follow links
 const loginSeo = mergeSEOConfig(siteConfig, {
@@ -582,7 +559,7 @@ const archiveSeo = mergeSEOConfig(siteConfig, {
 ### Combine Multiple Schemas
 
 ```tsx
-import { composeSchemas, createOrganizationSchema, createWebsiteSchema, JsonLd } from "react-ssr-seo";
+import { composeSchemas, createOrganizationSchema, createWebsiteSchema, JsonLd } from "react-ssr-seo-toolkit";
 
 // Merge into a single JSON-LD block with @graph array
 const combined = composeSchemas(
@@ -605,15 +582,14 @@ const combined = composeSchemas(
 
 ### Next.js App Router
 
-<details open>
-<summary><strong>Using with <code>generateMetadata()</code></strong></summary>
+**Using with `generateMetadata()`**
 
 ```tsx
 // app/blog/[slug]/page.tsx
 import {
   buildTitle, buildDescription, buildCanonicalUrl,
   createArticleSchema, safeJsonLdSerialize,
-} from "react-ssr-seo";
+} from "react-ssr-seo-toolkit";
 
 export async function generateMetadata({ params }) {
   const post = await getPost(params.slug);
@@ -657,19 +633,16 @@ export default function BlogPost({ params }) {
 }
 ```
 
-</details>
-
 <br />
 
 ### Next.js Pages Router
 
-<details>
-<summary><strong>Using with <code>next/head</code></strong></summary>
+**Using with `next/head`**
 
 ```tsx
 // pages/about.tsx
 import Head from "next/head";
-import { SEOHead, mergeSEOConfig } from "react-ssr-seo";
+import { SEOHead, mergeSEOConfig } from "react-ssr-seo-toolkit";
 
 export default function AboutPage() {
   const seo = mergeSEOConfig(siteConfig, {
@@ -691,18 +664,15 @@ export default function AboutPage() {
 }
 ```
 
-</details>
-
 <br />
 
 ### React Router 7 SSR
 
-<details>
-<summary><strong>Using in root document</strong></summary>
+**Using in root document**
 
 ```tsx
 // app/root.tsx
-import { SEOHead, JsonLd, createSEOConfig, mergeSEOConfig, createOrganizationSchema } from "react-ssr-seo";
+import { SEOHead, JsonLd, createSEOConfig, mergeSEOConfig, createOrganizationSchema } from "react-ssr-seo-toolkit";
 
 const siteConfig = createSEOConfig({
   titleTemplate: "%s — Acme",
@@ -736,19 +706,16 @@ export function HomePage() {
 }
 ```
 
-</details>
-
 <br />
 
 ### Express + React SSR
 
-<details>
-<summary><strong>Using with <code>renderToString()</code></strong></summary>
+**Using with `renderToString()`**
 
 ```tsx
 import express from "express";
 import { renderToString } from "react-dom/server";
-import { SEOHead, JsonLd, createSEOConfig, mergeSEOConfig, createProductSchema } from "react-ssr-seo";
+import { SEOHead, JsonLd, createSEOConfig, mergeSEOConfig, createProductSchema } from "react-ssr-seo-toolkit";
 
 const app = express();
 
@@ -790,8 +757,6 @@ app.get("/products/:id", (req, res) => {
 
 app.listen(3000);
 ```
-
-</details>
 
 <br />
 
@@ -1037,7 +1002,7 @@ import type {
   FAQItem,
   SEOHeadProps,
   JsonLdProps,
-} from "react-ssr-seo";
+} from "react-ssr-seo-toolkit";
 ```
 
 <br />
@@ -1121,41 +1086,25 @@ npm run demo         # run demo server
 
 ## Troubleshooting
 
-<details>
-<summary><strong>"Cannot find module 'react-ssr-seo'"</strong></summary>
+### "Cannot find module 'react-ssr-seo-toolkit'"
 
-<br />
+Ensure the package is installed and your bundler supports the `exports` field in `package.json`. If using an older bundler, try importing from `react-ssr-seo-toolkit/dist/index.js` directly.
 
-Ensure the package is installed and your bundler supports the `exports` field in `package.json`. If using an older bundler, try importing from `react-ssr-seo/dist/index.js` directly.
-</details>
-
-<details>
-<summary><strong>Hydration mismatch warnings</strong></summary>
-
-<br />
+### Hydration mismatch warnings
 
 `<SEOHead>` produces deterministic output. If you see hydration warnings, ensure the same config object is used on both server and client. Avoid using `Date.now()` or random values in your SEO config.
-</details>
 
-<details>
-<summary><strong>JSON-LD not appearing in page source</strong></summary>
-
-<br />
+### JSON-LD not appearing in page source
 
 Make sure `<JsonLd>` or `<script type="application/ld+json">` is inside `<head>` and rendered during SSR — not in a client-only `useEffect`.
-</details>
 
-<details>
-<summary><strong>TypeScript errors</strong></summary>
-
-<br />
+### TypeScript errors
 
 All types are exported. Import them directly:
 
 ```tsx
-import type { SEOConfig, OpenGraphConfig } from "react-ssr-seo";
+import type { SEOConfig, OpenGraphConfig } from "react-ssr-seo-toolkit";
 ```
-</details>
 
 <br />
 

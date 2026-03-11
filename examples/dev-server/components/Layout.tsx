@@ -41,7 +41,7 @@ export function Layout({ children, pageConfig, schemas, activeRoute }: LayoutPro
             <div className="nav-inner">
               <a href="/" className="nav-brand">
                 <span className="nav-logo">{"{ }"}</span>
-                <span>react-ssr-seo</span>
+                <span>react-ssr-seo-toolkit</span>
               </a>
               <div className="nav-links">
                 {navLinks.map((link) => (
@@ -73,7 +73,7 @@ export function Layout({ children, pageConfig, schemas, activeRoute }: LayoutPro
             <div className="container">
               <div className="footer-grid">
                 <div className="footer-col">
-                  <h4 className="footer-heading">react-ssr-seo</h4>
+                  <h4 className="footer-heading">react-ssr-seo-toolkit</h4>
                   <p className="footer-text">
                     Framework-agnostic SEO utilities for React SSR applications.
                     Zero dependencies. Fully typed. SSR-safe.
@@ -94,7 +94,7 @@ export function Layout({ children, pageConfig, schemas, activeRoute }: LayoutPro
                     <a href="/getting-started">Getting Started</a>
                     <a href="/api">API Reference</a>
                     <a href="https://github.com/Tonmoy01/react-ssr-seo" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
-                    <a href="https://www.npmjs.com/package/react-ssr-seo" target="_blank" rel="noopener noreferrer">npm Package</a>
+                    <a href="https://www.npmjs.com/package/react-ssr-seo-toolkit" target="_blank" rel="noopener noreferrer">npm Package</a>
                   </div>
                 </div>
               </div>

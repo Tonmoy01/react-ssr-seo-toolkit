@@ -1,5 +1,5 @@
 {
-  "name": "react-ssr-seo",
+  "name": "react-ssr-seo-toolkit",
   "version": "1.0.2",
   "description": "Framework-agnostic SEO utilities, metadata builders, structured data helpers, and React components for SSR applications",
   "keywords": [

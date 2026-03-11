@@ -4,7 +4,7 @@ import {
   buildCanonicalUrl,
   createArticleSchema,
   createBreadcrumbSchema,
-} from "react-ssr-seo";
+} from "react-ssr-seo-toolkit";
 import { siteConfig, SITE_URL } from "../config/seo.js";
 import { Document } from "../components/Document.js";
 
