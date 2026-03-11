@@ -12,14 +12,14 @@ export function HomePage() {
     title: "Home",
     canonical: SITE_URL,
     openGraph: {
-      title: "react-ssr-seo — SEO Utilities for React SSR",
+      title: "react-ssr-seo-toolkit — SEO Utilities for React SSR",
       url: SITE_URL,
       images: [
         {
           url: `${SITE_URL}/og-home.jpg`,
           width: 1200,
           height: 630,
-          alt: "react-ssr-seo",
+          alt: "react-ssr-seo-toolkit",
         },
       ],
     },
@@ -32,7 +32,7 @@ export function HomePage() {
 
   const schemas = [
     createOrganizationSchema({
-      name: "react-ssr-seo",
+      name: "react-ssr-seo-toolkit",
       url: SITE_URL,
       logo: `${SITE_URL}/logo.png`,
       sameAs: [
@@ -41,7 +41,7 @@ export function HomePage() {
       ],
     }),
     createWebsiteSchema({
-      name: "react-ssr-seo",
+      name: "react-ssr-seo-toolkit",
       url: SITE_URL,
       description: "Framework-agnostic SEO utilities for React SSR applications.",
       searchUrl: `${SITE_URL}/search`,
@@ -237,7 +237,7 @@ import { siteConfig, SITE_URL } from "../config/seo";
 export function BlogPost() {
   const seo = mergeSEOConfig(siteConfig, {
     title: "My First Post",
-    description: "An introduction to react-ssr-seo.",
+    description: "An introduction to react-ssr-seo-toolkit.",
     canonical: SITE_URL + "/blog/my-first-post",
   });
 

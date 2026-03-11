@@ -122,7 +122,7 @@ const pageConfig = mergeSEOConfig(siteConfig, {
             All Robots Options
           </h2>
           <p className="section-subtitle">
-            react-ssr-seo provides helper functions and fine-grained control over robots directives.
+            react-ssr-seo-toolkit provides helper functions and fine-grained control over robots directives.
           </p>
 
           <div className="card card-elevated" style={{ overflowX: "auto" }}>

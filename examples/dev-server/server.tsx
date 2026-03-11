@@ -37,7 +37,7 @@ app.listen(PORT, () => {
   console.log(`
   ┌─────────────────────────────────────────────────┐
   │                                                 │
-  │   react-ssr-seo  Live Demo                      │
+  │   react-ssr-seo-toolkit  Live Demo               │
   │                                                 │
   │   http://localhost:${PORT}                        │
   │                                                 │

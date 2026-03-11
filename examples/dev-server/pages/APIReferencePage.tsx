@@ -10,7 +10,7 @@ export function APIReferencePage() {
   const pageConfig = mergeSEOConfig(siteConfig, {
     title: "API Reference",
     description:
-      "Complete API reference for react-ssr-seo — all functions, components, types, and schema generators.",
+      "Complete API reference for react-ssr-seo-toolkit — all functions, components, types, and schema generators.",
     canonical: buildCanonicalUrl(SITE_URL, "/api"),
   });
 
@@ -20,7 +20,7 @@ export function APIReferencePage() {
         <h1>API Reference</h1>
         <p>
           Complete documentation of all functions, components, and types exported
-          by react-ssr-seo.
+          by react-ssr-seo-toolkit.
         </p>
       </div>
 
@@ -510,7 +510,7 @@ const schema = createArticleSchema({
               </thead>
               <tbody>
                 <tr>
-                  <td><code>"react-ssr-seo"</code></td>
+                  <td><code>"react-ssr-seo-toolkit"</code></td>
                   <td>Everything</td>
                   <td>Default — all types, builders, schemas, components</td>
                 </tr>

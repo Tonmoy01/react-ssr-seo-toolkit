@@ -1,7 +1,7 @@
 /**
  * Generic React SSR Example (Express + ReactDOMServer)
  *
- * Shows how to use react-ssr-seo in a plain Node/Express
+ * Shows how to use react-ssr-seo-toolkit in a plain Node/Express
  * server-rendered React application without any framework.
  */
 

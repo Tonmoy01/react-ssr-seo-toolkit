@@ -2,12 +2,12 @@
 
 <br />
 
-<img src="https://img.shields.io/badge/react--ssr--seo-v1.0.1-000000?style=for-the-badge&labelColor=000000" alt="react-ssr-seo" />
+<img src="https://img.shields.io/badge/react--ssr--seo--toolkit-v1.0.2-000000?style=for-the-badge&labelColor=000000" alt="react-ssr-seo-toolkit" />
 
 <br />
 <br />
 
-# `react-ssr-seo`
+# `react-ssr-seo-toolkit`
 
 ### The Complete SEO Toolkit for React SSR Applications
 
@@ -19,7 +19,7 @@
 &nbsp;
 [![License](https://img.shields.io/npm/l/react-ssr-seo-toolkit?style=for-the-badge&color=blue)](./LICENSE)
 &nbsp;
-[![Bundle](https://img.shields.io/bundlephobia/minzip/react-ssr-seo?style=for-the-badge&label=size&color=success)](https://bundlephobia.com/package/react-ssr-seo-toolkit)
+[![Bundle](https://img.shields.io/bundlephobia/minzip/react-ssr-seo-toolkit?style=for-the-badge&label=size&color=success)](https://bundlephobia.com/package/react-ssr-seo-toolkit)
 
 <br />
 
@@ -163,9 +163,6 @@ function AboutPage() {
 
 ### Blog / Article Page
 
-<details open>
-<summary><strong>Click to expand full example</strong></summary>
-
 ```tsx
 import {
   SEOHead, JsonLd,
@@ -246,10 +243,7 @@ function BlogPostPage() {
 }
 ```
 
-</details>
-
-<details>
-<summary><strong>See the HTML output this generates</strong></summary>
+**HTML output this generates:**
 
 ```html
 <head>
@@ -289,8 +283,6 @@ function BlogPostPage() {
 </head>
 ```
 
-</details>
-
 <br />
 
 ---
@@ -298,9 +290,6 @@ function BlogPostPage() {
 <br />
 
 ### E-Commerce Product Page
-
-<details open>
-<summary><strong>Click to expand full example</strong></summary>
 
 ```tsx
 import {
@@ -382,8 +371,6 @@ function ProductPage() {
 }
 ```
 
-</details>
-
 <br />
 
 ---
@@ -391,9 +378,6 @@ function ProductPage() {
 <br />
 
 ### FAQ Page
-
-<details open>
-<summary><strong>Click to expand full example</strong></summary>
 
 ```tsx
 import {
@@ -434,8 +418,6 @@ function FAQPage() {
 }
 ```
 
-</details>
-
 <br />
 
 ---
@@ -443,9 +425,6 @@ function FAQPage() {
 <br />
 
 ### Homepage (Organization + Website Schema)
-
-<details>
-<summary><strong>Click to expand full example</strong></summary>
 
 ```tsx
 import {
@@ -505,8 +484,6 @@ function HomePage() {
   );
 }
 ```
-
-</details>
 
 <br />
 
@@ -605,8 +582,7 @@ const combined = composeSchemas(
 
 ### Next.js App Router
 
-<details open>
-<summary><strong>Using with <code>generateMetadata()</code></strong></summary>
+**Using with `generateMetadata()`**
 
 ```tsx
 // app/blog/[slug]/page.tsx
@@ -657,14 +633,11 @@ export default function BlogPost({ params }) {
 }
 ```
 
-</details>
-
 <br />
 
 ### Next.js Pages Router
 
-<details>
-<summary><strong>Using with <code>next/head</code></strong></summary>
+**Using with `next/head`**
 
 ```tsx
 // pages/about.tsx
@@ -691,14 +664,11 @@ export default function AboutPage() {
 }
 ```
 
-</details>
-
 <br />
 
 ### React Router 7 SSR
 
-<details>
-<summary><strong>Using in root document</strong></summary>
+**Using in root document**
 
 ```tsx
 // app/root.tsx
@@ -736,14 +706,11 @@ export function HomePage() {
 }
 ```
 
-</details>
-
 <br />
 
 ### Express + React SSR
 
-<details>
-<summary><strong>Using with <code>renderToString()</code></strong></summary>
+**Using with `renderToString()`**
 
 ```tsx
 import express from "express";
@@ -790,8 +757,6 @@ app.get("/products/:id", (req, res) => {
 
 app.listen(3000);
 ```
-
-</details>
 
 <br />
 
@@ -1121,41 +1086,25 @@ npm run demo         # run demo server
 
 ## Troubleshooting
 
-<details>
-<summary><strong>"Cannot find module 'react-ssr-seo'"</strong></summary>
+### "Cannot find module 'react-ssr-seo-toolkit'"
 
-<br />
+Ensure the package is installed and your bundler supports the `exports` field in `package.json`. If using an older bundler, try importing from `react-ssr-seo-toolkit/dist/index.js` directly.
 
-Ensure the package is installed and your bundler supports the `exports` field in `package.json`. If using an older bundler, try importing from `react-ssr-seo/dist/index.js` directly.
-</details>
-
-<details>
-<summary><strong>Hydration mismatch warnings</strong></summary>
-
-<br />
+### Hydration mismatch warnings
 
 `<SEOHead>` produces deterministic output. If you see hydration warnings, ensure the same config object is used on both server and client. Avoid using `Date.now()` or random values in your SEO config.
-</details>
 
-<details>
-<summary><strong>JSON-LD not appearing in page source</strong></summary>
-
-<br />
+### JSON-LD not appearing in page source
 
 Make sure `<JsonLd>` or `<script type="application/ld+json">` is inside `<head>` and rendered during SSR — not in a client-only `useEffect`.
-</details>
 
-<details>
-<summary><strong>TypeScript errors</strong></summary>
-
-<br />
+### TypeScript errors
 
 All types are exported. Import them directly:
 
 ```tsx
 import type { SEOConfig, OpenGraphConfig } from "react-ssr-seo-toolkit";
 ```
-</details>
 
 <br />
 

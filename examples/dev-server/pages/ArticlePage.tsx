@@ -118,7 +118,7 @@ export function ArticlePage() {
             SEO Tags Generated
           </h2>
           <p className="section-subtitle">
-            View Page Source to verify these. Here's what react-ssr-seo renders for this page:
+            View Page Source to verify these. Here's what react-ssr-seo-toolkit renders for this page:
           </p>
 
           <div className="code-block">
