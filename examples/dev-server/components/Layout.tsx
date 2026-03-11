@@ -94,7 +94,7 @@ export function Layout({ children, pageConfig, schemas, activeRoute }: LayoutPro
                     <a href="/getting-started">Getting Started</a>
                     <a href="/api">API Reference</a>
                     <a href="https://github.com/Tonmoy01/react-ssr-seo" target="_blank" rel="noopener noreferrer">GitHub Repository</a>
-                    <a href="https://www.npmjs.com/package/react-ssr-seo" target="_blank" rel="noopener noreferrer">npm Package</a>
+                    <a href="https://www.npmjs.com/package/react-ssr-seo-toolkit" target="_blank" rel="noopener noreferrer">npm Package</a>
                   </div>
                 </div>
               </div>

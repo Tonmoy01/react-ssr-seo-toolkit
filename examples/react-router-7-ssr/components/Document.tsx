@@ -1,5 +1,5 @@
 import React from "react";
-import { SEOHead, createSEOConfig } from "react-ssr-seo";
+import { SEOHead, createSEOConfig } from "react-ssr-seo-toolkit";
 
 interface DocumentProps {
   children: React.ReactNode;

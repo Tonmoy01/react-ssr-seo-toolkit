@@ -56,7 +56,7 @@ export function APIReferencePage() {
               and removes empty values.
             </p>
             <div className="code-block">
-              <pre>{`import { createSEOConfig } from "react-ssr-seo";
+              <pre>{`import { createSEOConfig } from "react-ssr-seo-toolkit";
 
 const config = createSEOConfig({
   titleTemplate: "%s | My Site",
@@ -74,7 +74,7 @@ const config = createSEOConfig({
               Arrays are <strong>replaced</strong>, not concatenated.
             </p>
             <div className="code-block">
-              <pre>{`import { mergeSEOConfig } from "react-ssr-seo";
+              <pre>{`import { mergeSEOConfig } from "react-ssr-seo-toolkit";
 
 const pageConfig = mergeSEOConfig(siteConfig, {
   title: "About",
@@ -309,7 +309,7 @@ const pageConfig = mergeSEOConfig(siteConfig, {
   createWebsiteSchema,
   composeSchemas,
   JsonLd,
-} from "react-ssr-seo";
+} from "react-ssr-seo-toolkit";
 
 const org = createOrganizationSchema({ name: "My Co", url: "..." });
 const site = createWebsiteSchema({ name: "My Site", url: "..." });
@@ -337,7 +337,7 @@ const composed = composeSchemas(org, site);
               any additional meta/link tags.
             </p>
             <div className="code-block">
-              <pre>{`import { SEOHead, mergeSEOConfig } from "react-ssr-seo";
+              <pre>{`import { SEOHead, mergeSEOConfig } from "react-ssr-seo-toolkit";
 
 const seo = mergeSEOConfig(siteConfig, { title: "My Page" });
 
@@ -366,7 +366,7 @@ const seo = mergeSEOConfig(siteConfig, { title: "My Page" });
               to escape HTML-breaking characters.
             </p>
             <div className="code-block">
-              <pre>{`import { JsonLd, createArticleSchema } from "react-ssr-seo";
+              <pre>{`import { JsonLd, createArticleSchema } from "react-ssr-seo-toolkit";
 
 const schema = createArticleSchema({
   headline: "My Post",
@@ -455,7 +455,7 @@ const schema = createArticleSchema({
   ProductSchemaInput,
   FAQItem,
   BreadcrumbItem,
-} from "react-ssr-seo";`}</pre>
+} from "react-ssr-seo-toolkit";`}</pre>
           </div>
 
           <div className="code-block">
@@ -515,12 +515,12 @@ const schema = createArticleSchema({
                   <td>Default — all types, builders, schemas, components</td>
                 </tr>
                 <tr>
-                  <td><code>"react-ssr-seo/schema"</code></td>
+                  <td><code>"react-ssr-seo-toolkit/schema"</code></td>
                   <td>Schema generators only</td>
                   <td>Lightweight import when you only need JSON-LD</td>
                 </tr>
                 <tr>
-                  <td><code>"react-ssr-seo/components"</code></td>
+                  <td><code>"react-ssr-seo-toolkit/components"</code></td>
                   <td>React components only</td>
                   <td>When you only need SEOHead and JsonLd</td>
                 </tr>

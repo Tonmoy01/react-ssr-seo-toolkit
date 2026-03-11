@@ -35,21 +35,21 @@ export function GettingStartedPage() {
               <span className="code-header-title">npm</span>
               <span className="code-header-lang">shell</span>
             </div>
-            <pre>{`npm install react-ssr-seo`}</pre>
+            <pre>{`npm install react-ssr-seo-toolkit`}</pre>
           </div>
           <div className="code-block">
             <div className="code-header">
               <span className="code-header-title">yarn</span>
               <span className="code-header-lang">shell</span>
             </div>
-            <pre>{`yarn add react-ssr-seo`}</pre>
+            <pre>{`yarn add react-ssr-seo-toolkit`}</pre>
           </div>
           <div className="code-block">
             <div className="code-header">
               <span className="code-header-title">pnpm</span>
               <span className="code-header-lang">shell</span>
             </div>
-            <pre>{`pnpm add react-ssr-seo`}</pre>
+            <pre>{`pnpm add react-ssr-seo-toolkit`}</pre>
           </div>
           <div className="callout callout-info">
             <div className="callout-icon">i</div>
@@ -77,7 +77,7 @@ export function GettingStartedPage() {
               <span className="code-header-title">config/seo.ts</span>
               <span className="code-header-lang">TypeScript</span>
             </div>
-            <pre>{`import { createSEOConfig } from "react-ssr-seo";
+            <pre>{`import { createSEOConfig } from "react-ssr-seo-toolkit";
 
 // Shared base config — reused across all pages
 export const siteConfig = createSEOConfig({
@@ -127,7 +127,7 @@ export const SITE_URL = "https://mysite.com";`}</pre>
   mergeSEOConfig,
   buildCanonicalUrl,
   SEOHead,
-} from "react-ssr-seo";
+} from "react-ssr-seo-toolkit";
 import { siteConfig, SITE_URL } from "../config/seo";
 
 export function AboutPage() {
@@ -195,7 +195,7 @@ export function AboutPage() {
   createArticleSchema,
   createBreadcrumbSchema,
   JsonLd,
-} from "react-ssr-seo";
+} from "react-ssr-seo-toolkit";
 
 // In your component:
 const articleSchema = createArticleSchema({
@@ -249,7 +249,7 @@ const breadcrumb = createBreadcrumbSchema([
   buildOpenGraph,
   createArticleSchema,
   safeJsonLdSerialize,
-} from "react-ssr-seo";
+} from "react-ssr-seo-toolkit";
 import { siteConfig, SITE_URL } from "@/config/seo";
 import type { Metadata } from "next";
 
@@ -311,7 +311,7 @@ export default async function BlogPage({ params }) {
                 <span className="code-header-title">root.tsx</span>
                 <span className="code-header-lang">TSX</span>
               </div>
-              <pre>{`import { SEOHead, JsonLd, mergeSEOConfig } from "react-ssr-seo";
+              <pre>{`import { SEOHead, JsonLd, mergeSEOConfig } from "react-ssr-seo-toolkit";
 import { siteConfig } from "./config/seo";
 
 export default function Root() {
@@ -351,7 +351,7 @@ export default function Root() {
               </div>
               <pre>{`import express from "express";
 import { renderToString } from "react-dom/server";
-import { SEOHead, mergeSEOConfig } from "react-ssr-seo";
+import { SEOHead, mergeSEOConfig } from "react-ssr-seo-toolkit";
 import { siteConfig } from "./config/seo";
 
 const app = express();

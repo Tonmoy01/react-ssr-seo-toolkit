@@ -213,7 +213,7 @@ export function ArticlePage() {
   createBreadcrumbSchema,
   SEOHead,
   JsonLd,
-} from "react-ssr-seo";
+} from "react-ssr-seo-toolkit";
 import { siteConfig, SITE_URL } from "../config/seo";
 
 // 1. Merge page config with site defaults

@@ -37,7 +37,7 @@ export function HomePage() {
       logo: `${SITE_URL}/logo.png`,
       sameAs: [
         "https://github.com/Tonmoy01/react-ssr-seo",
-        "https://www.npmjs.com/package/react-ssr-seo",
+        "https://www.npmjs.com/package/react-ssr-seo-toolkit",
       ],
     }),
     createWebsiteSchema({
@@ -72,9 +72,9 @@ export function HomePage() {
               API Reference
             </a>
           </div>
-          <div className="hero-install" data-copy="npm install react-ssr-seo" title="Click to copy">
+          <div className="hero-install" data-copy="npm install react-ssr-seo-toolkit" title="Click to copy">
             <span className="prompt">$</span>
-            <span>npm install react-ssr-seo</span>
+            <span>npm install react-ssr-seo-toolkit</span>
             <span className="copy-hint">click to copy</span>
           </div>
         </div>
@@ -187,7 +187,7 @@ export function HomePage() {
               <li>
                 <h3>Install the package</h3>
                 <div className="code-block">
-                  <pre>{`npm install react-ssr-seo`}</pre>
+                  <pre>{`npm install react-ssr-seo-toolkit`}</pre>
                 </div>
               </li>
               <li>
@@ -200,7 +200,7 @@ export function HomePage() {
                     <span className="code-header-title">config/seo.ts</span>
                     <span className="code-header-lang">TypeScript</span>
                   </div>
-                  <pre>{`import { createSEOConfig } from "react-ssr-seo";
+                  <pre>{`import { createSEOConfig } from "react-ssr-seo-toolkit";
 
 export const siteConfig = createSEOConfig({
   titleTemplate: "%s | My Site",
@@ -231,7 +231,7 @@ export const SITE_URL = "https://mysite.com";`}</pre>
                     <span className="code-header-lang">TSX</span>
                   </div>
                   <pre>{`import { mergeSEOConfig, SEOHead, JsonLd,
-  createArticleSchema } from "react-ssr-seo";
+  createArticleSchema } from "react-ssr-seo-toolkit";
 import { siteConfig, SITE_URL } from "../config/seo";
 
 export function BlogPost() {

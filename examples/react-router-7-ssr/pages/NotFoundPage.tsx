@@ -1,5 +1,5 @@
 import React from "react";
-import { mergeSEOConfig, noIndex } from "react-ssr-seo";
+import { mergeSEOConfig, noIndex } from "react-ssr-seo-toolkit";
 import { siteConfig } from "../config/seo.js";
 import { Document } from "../components/Document.js";
 

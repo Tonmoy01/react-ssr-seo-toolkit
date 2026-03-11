@@ -46,7 +46,7 @@ const faqs = [
   {
     question: "Can I use it without React?",
     answer:
-      'The core builder functions (buildTitle, buildOpenGraph, buildCanonicalUrl, etc.) and schema generators work without React. Import from "react-ssr-seo/schema" for tree-shaken schema-only usage.',
+      'The core builder functions (buildTitle, buildOpenGraph, buildCanonicalUrl, etc.) and schema generators work without React. Import from "react-ssr-seo-toolkit/schema" for tree-shaken schema-only usage.',
   },
 ];
 
@@ -161,7 +161,7 @@ export function FAQPage() {
   createFAQSchema,
   SEOHead,
   JsonLd,
-} from "react-ssr-seo";
+} from "react-ssr-seo-toolkit";
 import { siteConfig, SITE_URL } from "../config/seo";
 
 // Define your FAQ data

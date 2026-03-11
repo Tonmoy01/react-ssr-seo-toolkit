@@ -101,7 +101,7 @@ export function NoIndexPage() {
   mergeSEOConfig,
   noIndex,
   SEOHead,
-} from "react-ssr-seo";
+} from "react-ssr-seo-toolkit";
 import { siteConfig } from "../config/seo";
 
 const pageConfig = mergeSEOConfig(siteConfig, {
@@ -186,7 +186,7 @@ const pageConfig = mergeSEOConfig(siteConfig, {
               <span className="code-header-title">Fine-grained robots control</span>
               <span className="code-header-lang">TypeScript</span>
             </div>
-            <pre>{`import { mergeSEOConfig, noIndexNoFollow } from "react-ssr-seo";
+            <pre>{`import { mergeSEOConfig, noIndexNoFollow } from "react-ssr-seo-toolkit";
 
 // Option 1: Use the noIndexNoFollow helper
 const loginPage = mergeSEOConfig(siteConfig, {
