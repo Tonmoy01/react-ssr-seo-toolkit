@@ -64,6 +64,26 @@
         "types": "./dist/components.d.cts",
         "default": "./dist/components.cjs"
       }
+    },
+    "./adapters/nextjs": {
+      "import": {
+        "types": "./dist/adapters/nextjs.d.ts",
+        "default": "./dist/adapters/nextjs.js"
+      },
+      "require": {
+        "types": "./dist/adapters/nextjs.d.cts",
+        "default": "./dist/adapters/nextjs.cjs"
+      }
+    },
+    "./adapters/react-router": {
+      "import": {
+        "types": "./dist/adapters/react-router.d.ts",
+        "default": "./dist/adapters/react-router.js"
+      },
+      "require": {
+        "types": "./dist/adapters/react-router.d.cts",
+        "default": "./dist/adapters/react-router.cjs"
+      }
     }
   },
   "files": [

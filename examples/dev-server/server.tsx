@@ -10,6 +10,7 @@ import * as indexRoute from './routes/_index.tsx';
 import * as gettingStartedRoute from './routes/getting-started.tsx';
 import * as reactGuideRoute from './routes/react-guide.tsx';
 import * as nextjsGuideRoute from './routes/nextjs-guide.tsx';
+import * as reactRouterGuideRoute from './routes/react-router-guide.tsx';
 import * as multiPageRoute from './routes/multi-page.tsx';
 import * as recipesRoute from './routes/recipes.tsx';
 import * as commonMistakesRoute from './routes/common-mistakes.tsx';
@@ -31,6 +32,7 @@ const routes: Record<string, RouteModule> = {
   '/getting-started': gettingStartedRoute as unknown as RouteModule,
   '/react-guide': reactGuideRoute as unknown as RouteModule,
   '/nextjs-guide': nextjsGuideRoute as unknown as RouteModule,
+  '/react-router-guide': reactRouterGuideRoute as unknown as RouteModule,
   '/multi-page': multiPageRoute as unknown as RouteModule,
   '/recipes': recipesRoute as unknown as RouteModule,
   '/common-mistakes': commonMistakesRoute as unknown as RouteModule,
@@ -85,6 +87,7 @@ app.listen(PORT, () => {
   │   /getting-started      Installation Guide           │
   │   /react-guide          React + Express SSR Guide    │
   │   /nextjs-guide         Next.js Integration Guide    │
+  │   /react-router-guide   React Router 7 Guide         │
   │   /multi-page           Multi-Page App Usage         │
   │   /recipes              Copy-Paste Recipes           │
   │   /common-mistakes      Common Mistakes & Gotchas    │
