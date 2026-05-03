@@ -76,9 +76,9 @@ All in one package. Zero dependencies. Fully typed. SSR-safe.
 
 | | Framework | Integration |
 |:---:|---|---|
-| <img src="https://img.shields.io/badge/-Next.js-000?style=flat-square&logo=nextdotjs" /> | **Next.js App Router** | `generateMetadata()` + `safeJsonLdSerialize()` |
+| <img src="https://img.shields.io/badge/-Next.js-000?style=flat-square&logo=nextdotjs" /> | **Next.js App Router** | `toNextMetadata()` adapter → `generateMetadata()` |
 | <img src="https://img.shields.io/badge/-Next.js-000?style=flat-square&logo=nextdotjs" /> | **Next.js Pages Router** | `<SEOHead>` inside `next/head` |
-| <img src="https://img.shields.io/badge/-React_Router-CA4245?style=flat-square&logo=reactrouter&logoColor=white" /> | **React Router 7 SSR** | `<SEOHead>` in root component |
+| <img src="https://img.shields.io/badge/-React_Router-CA4245?style=flat-square&logo=reactrouter&logoColor=white" /> | **React Router 7** | `toRouterMeta()` adapter → `meta()` export |
 | <img src="https://img.shields.io/badge/-Express-000?style=flat-square&logo=express" /> | **Express + React SSR** | `<SEOHead>` in `renderToString()` |
 | <img src="https://img.shields.io/badge/-Remix-000?style=flat-square&logo=remix" /> | **Remix / Astro / Solid** | Pure utility functions (no React needed) |
 
@@ -588,32 +588,39 @@ const combined = composeSchemas(
 
 ### Next.js App Router
 
+Use the `toNextMetadata()` adapter to convert any `SEOConfig` directly into a Next.js `Metadata` object.
+
+```bash
+# no extra install needed — adapter is included in the package
+import { toNextMetadata } from 'react-ssr-seo-toolkit/adapters/nextjs';
+```
+
 ```tsx
 // app/blog/[slug]/page.tsx
-import {
-  buildTitle, buildDescription, buildCanonicalUrl,
-  createArticleSchema, safeJsonLdSerialize,
-} from "react-ssr-seo-toolkit";
+import { toNextMetadata } from "react-ssr-seo-toolkit/adapters/nextjs";
+import { createArticleSchema, safeJsonLdSerialize, buildCanonicalUrl } from "react-ssr-seo-toolkit";
+import type { Metadata } from "next";
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata({ params }): Promise<Metadata> {
   const post = await getPost(params.slug);
 
-  return {
-    title: buildTitle(post.title, "%s | My Blog"),
-    description: buildDescription(post.excerpt, 160),
-    alternates: {
-      canonical: buildCanonicalUrl("https://myblog.com", `/blog/${params.slug}`),
-    },
+  return toNextMetadata({
+    title: post.title,
+    titleTemplate: "%s | My Blog",
+    description: post.excerpt,
+    canonical: buildCanonicalUrl("https://myblog.com", `/blog/${params.slug}`),
     openGraph: {
       title: post.title,
       type: "article",
-      images: [{ url: post.image, width: 1200, height: 630 }],
+      images: [{ url: post.image, width: 1200, height: 630, alt: post.title }],
     },
-  };
+    twitter: { card: "summary_large_image", creator: "@myblog" },
+    robots: { index: true, follow: true },
+  });
 }
 
-export default function BlogPost({ params }) {
-  const post = getPost(params.slug);
+export default async function BlogPost({ params }) {
+  const post = await getPost(params.slug);
 
   const schema = createArticleSchema({
     headline: post.title,
@@ -669,7 +676,69 @@ export default function AboutPage() {
 
 <br />
 
-### React Router 7 SSR
+### React Router 7
+
+Use the `toRouterMeta()` adapter to convert any `SEOConfig` into React Router 7's `MetaDescriptor[]` array — the same format returned by a route's `meta()` export.
+
+```bash
+import { toRouterMeta, toRouterLinks } from 'react-ssr-seo-toolkit/adapters/react-router';
+```
+
+**Option A — `meta()` export (recommended, handles everything in one place):**
+
+```tsx
+// app/routes/about.tsx
+import { toRouterMeta } from "react-ssr-seo-toolkit/adapters/react-router";
+import { mergeSEOConfig, buildCanonicalUrl } from "react-ssr-seo-toolkit";
+import { siteConfig, SITE_URL } from "../config/seo";
+import type { Route } from "./+types/about";
+
+export function meta({}: Route.MetaArgs) {
+  return toRouterMeta(
+    mergeSEOConfig(siteConfig, {
+      title: "About Us",
+      description: "Learn about our company.",
+      canonical: buildCanonicalUrl(SITE_URL, "/about"),
+      openGraph: { type: "website", title: "About Us" },
+      twitter: { card: "summary_large_image" },
+    })
+  );
+}
+
+export default function AboutPage() {
+  return (
+    <main>
+      <h1>About Us</h1>
+    </main>
+  );
+}
+```
+
+**Option B — `meta()` + `links()` separated:**
+
+```tsx
+// app/routes/about.tsx
+import { toRouterMeta, toRouterLinks } from "react-ssr-seo-toolkit/adapters/react-router";
+
+const seoConfig = {
+  title: "About Us",
+  canonical: "https://mysite.com/about",
+  alternates: [{ hreflang: "en", href: "https://mysite.com/en/about" }],
+  openGraph: { type: "website", title: "About Us" },
+};
+
+// meta tags (title, og:*, twitter:*, robots)
+export function meta() {
+  return toRouterMeta(seoConfig);
+}
+
+// link tags (canonical, hreflang alternates)
+export function links() {
+  return toRouterLinks(seoConfig);
+}
+```
+
+**Option C — Classic loader pattern with `<SEOHead>`:**
 
 ```tsx
 // app/root.tsx — only the root layout writes <html>
@@ -696,7 +765,7 @@ export default function Root() {
 ```
 
 ```tsx
-// app/routes/about.tsx — page just provides SEO data + content
+// app/routes/about.tsx
 import { mergeSEOConfig, buildCanonicalUrl } from "react-ssr-seo-toolkit";
 import { siteConfig, SITE_URL } from "../config/seo";
 
@@ -710,11 +779,7 @@ export function loader() {
 }
 
 export default function AboutPage() {
-  return (
-    <main>
-      <h1>About Us</h1>
-    </main>
-  );
+  return <main><h1>About Us</h1></main>;
 }
 ```
 
@@ -832,6 +897,34 @@ All return a plain object with `@context: "https://schema.org"` and `@type` set.
 | `buildFullUrl(base, path?)` | Combine base URL with path |
 | `omitEmpty(obj)` | Remove keys with `undefined`, `null`, or empty string values |
 | `deepMerge(base, override)` | Deep-merge two objects (arrays replaced, not concatenated) |
+
+<br />
+
+### Framework Adapters
+
+#### Next.js Adapter — `react-ssr-seo-toolkit/adapters/nextjs`
+
+| Function | What It Does |
+|---|---|
+| `toNextMetadata(config)` | Converts `SEOConfig` → Next.js App Router `Metadata` object. Use inside `generateMetadata()` or `export const metadata`. |
+| `buildNextTitle(config)` | Returns the resolved title string (applies `titleTemplate` if set). |
+
+**Exported types:** `NextJSMetadata`, `NextJSMetadataTitle`, `NextJSMetadataImage`, `NextJSMetadataRobots`, `NextJSMetadataOpenGraph`, `NextJSMetadataTwitter`, `NextJSMetadataAlternates`
+
+<br />
+
+#### React Router 7 Adapter — `react-ssr-seo-toolkit/adapters/react-router`
+
+| Function | What It Does |
+|---|---|
+| `toRouterMeta(config)` | Converts `SEOConfig` → `MetaDescriptor[]`. Use as the return value of a route's `meta()` export. Includes title, description, robots, OG, Twitter, hreflang, canonical, and custom tags. |
+| `toRouterLinks(config)` | Converts canonical + hreflang + additionalLinkTags → `LinkDescriptor[]`. Use as the return value of a route's `links()` export. |
+
+**Exported types:** `RouterMetaDescriptor`, `RouterTitleDescriptor`, `RouterNameMetaDescriptor`, `RouterPropertyMetaDescriptor`, `RouterLinkDescriptor`
+
+<br />
+
+---
 
 <br />
 

@@ -47,7 +47,7 @@ export function NextjsGuidePage() {
                 <tr>
                   <td>Title, description, OG, Twitter</td>
                   <td><code>generateMetadata()</code> in each page</td>
-                  <td>Use <code>mergeSEOConfig</code>, <code>buildTitle</code>, <code>buildCanonicalUrl</code></td>
+                  <td><code>toNextMetadata(config)</code> from the adapter — converts any <code>SEOConfig</code> in one call</td>
                 </tr>
                 <tr>
                   <td>JSON-LD structured data</td>
@@ -68,8 +68,8 @@ export function NextjsGuidePage() {
               <p>
                 <strong>Do not</strong> use <code>{"<SEOHead>"}</code> in Next.js App Router pages.
                 Next.js manages <code>{"<head>"}</code> through <code>generateMetadata</code>.
-                Use the toolkit's <em>builder functions</em> to generate the metadata values,
-                then return them in Next.js's format.
+                Use the <code>toNextMetadata()</code> adapter to convert any <code>SEOConfig</code>
+                directly into Next.js's <code>Metadata</code> format.
               </p>
             </div>
           </div>
@@ -201,47 +201,28 @@ export default function RootLayout({
             Static page with metadata
           </h2>
           <p style={{ color: "#64748b", marginBottom: "1rem" }}>
-            For static pages, use <code>mergeSEOConfig</code> to build your metadata,
-            then map the values to Next.js's <code>Metadata</code> format.
+            Use the <code>toNextMetadata()</code> adapter to convert any <code>SEOConfig</code>
+            directly into Next.js's <code>Metadata</code> format — no manual mapping needed.
           </p>
           <div className="code-block">
             <div className="code-header">
               <span className="code-header-title">app/about/page.tsx</span>
               <span className="code-header-lang">TSX</span>
             </div>
-            <pre>{`import {
-  mergeSEOConfig,
-  buildTitle,
-  buildCanonicalUrl,
-} from "react-ssr-seo-toolkit";
+            <pre>{`import { toNextMetadata } from "react-ssr-seo-toolkit/adapters/nextjs";
+import { mergeSEOConfig, buildCanonicalUrl } from "react-ssr-seo-toolkit";
 import { siteConfig, SITE_URL } from "@/lib/seo";
 import type { Metadata } from "next";
 
-// Build SEO config using the toolkit
-const seo = mergeSEOConfig(siteConfig, {
-  title: "About Us",
-  description: "Learn about our team and mission.",
-  canonical: buildCanonicalUrl(SITE_URL, "/about"),
-});
-
-// Export Next.js metadata
-export const metadata: Metadata = {
-  title: buildTitle(seo.title!, seo.titleTemplate),
-  description: seo.description,
-  alternates: { canonical: seo.canonical },
-  openGraph: {
-    title: seo.title,
-    description: seo.description,
-    url: seo.canonical,
-    siteName: seo.openGraph?.siteName,
-    type: "website",
-    locale: seo.openGraph?.locale,
-  },
-  twitter: {
-    card: "summary_large_image",
-    site: seo.twitter?.site,
-  },
-};
+// toNextMetadata() converts SEOConfig → Next.js Metadata in one call
+export const metadata: Metadata = toNextMetadata(
+  mergeSEOConfig(siteConfig, {
+    title: "About Us",
+    description: "Learn about our team and mission.",
+    canonical: buildCanonicalUrl(SITE_URL, "/about"),
+    openGraph: { type: "website" },
+  })
+);
 
 // Page component — just content, no <html> or <head>
 export default function AboutPage() {
@@ -262,17 +243,17 @@ export default function AboutPage() {
             Dynamic page with generateMetadata
           </h2>
           <p style={{ color: "#64748b", marginBottom: "1rem" }}>
-            For dynamic routes, use <code>generateMetadata</code> as an async function
-            to fetch data and build SEO config. Add JSON-LD in the page component body.
+            For dynamic routes, fetch data in <code>generateMetadata</code> and pass the
+            result through <code>toNextMetadata()</code>. Add JSON-LD in the page body.
           </p>
           <div className="code-block">
             <div className="code-header">
               <span className="code-header-title">app/blog/[slug]/page.tsx</span>
               <span className="code-header-lang">TSX</span>
             </div>
-            <pre>{`import {
+            <pre>{`import { toNextMetadata } from "react-ssr-seo-toolkit/adapters/nextjs";
+import {
   mergeSEOConfig,
-  buildTitle,
   buildCanonicalUrl,
   createArticleSchema,
   createBreadcrumbSchema,
@@ -304,31 +285,22 @@ export async function generateMetadata({
   const post = await getPost(slug);
   const url = buildCanonicalUrl(SITE_URL, \`/blog/\${slug}\`);
 
-  const seo = mergeSEOConfig(siteConfig, {
-    title: post.title,
-    description: post.excerpt,
-    canonical: url,
-  });
-
-  return {
-    title: buildTitle(seo.title!, seo.titleTemplate),
-    description: seo.description,
-    alternates: { canonical: url },
-    openGraph: {
+  // toNextMetadata() handles all the mapping automatically
+  return toNextMetadata(
+    mergeSEOConfig(siteConfig, {
       title: post.title,
       description: post.excerpt,
-      url,
-      type: "article",
-      publishedTime: post.date,
-      authors: [post.author],
-      images: [{ url: post.image }],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: post.title,
-      description: post.excerpt,
-    },
-  };
+      canonical: url,
+      openGraph: {
+        type: "article",
+        title: post.title,
+        description: post.excerpt,
+        url,
+        images: [{ url: post.image, width: 1200, height: 630, alt: post.title }],
+      },
+      twitter: { card: "summary_large_image", title: post.title },
+    })
+  );
 }
 
 // Page component — content + JSON-LD
@@ -433,72 +405,51 @@ export default function DashboardPage() {
             Reusable metadata helper
           </h2>
           <p style={{ color: "#64748b", marginBottom: "1rem" }}>
-            To reduce repetition across pages, create a helper that converts
-            the toolkit's <code>SEOConfig</code> into Next.js <code>Metadata</code>.
+            The built-in <code>toNextMetadata()</code> adapter already does this for you —
+            no custom helper needed. Just combine it with <code>mergeSEOConfig</code> and
+            your site config:
           </p>
           <div className="code-block">
             <div className="code-header">
-              <span className="code-header-title">lib/metadata.ts</span>
+              <span className="code-header-title">lib/seo.ts — shared site config</span>
               <span className="code-header-lang">TypeScript</span>
             </div>
-            <pre>{`import {
-  mergeSEOConfig,
-  buildTitle,
-  buildCanonicalUrl,
-} from "react-ssr-seo-toolkit";
-import { siteConfig, SITE_URL } from "./seo";
-import type { Metadata } from "next";
-import type { SEOConfig } from "react-ssr-seo-toolkit";
+            <pre>{`import { createSEOConfig, buildCanonicalUrl } from "react-ssr-seo-toolkit";
+import { toNextMetadata } from "react-ssr-seo-toolkit/adapters/nextjs";
+import type { SEOConfig, Metadata } from "react-ssr-seo-toolkit";
 
-/**
- * Converts toolkit SEOConfig into Next.js Metadata.
- * Use this in generateMetadata() or as a static export.
- */
-export function buildMetadata(
-  pageConfig: Partial<SEOConfig>,
+export const siteConfig = createSEOConfig({
+  titleTemplate: "%s | My Blog",
+  openGraph: { siteName: "My Blog", type: "website", locale: "en_US" },
+  twitter: { card: "summary_large_image", site: "@myblog" },
+});
+
+export const SITE_URL = "https://myblog.com";
+
+// Thin wrapper: merge + convert in one call
+export function buildPageMetadata(
+  override: Partial<SEOConfig>,
   path?: string
 ): Metadata {
-  const seo = mergeSEOConfig(siteConfig, {
-    ...pageConfig,
-    canonical: path
-      ? buildCanonicalUrl(SITE_URL, path)
-      : pageConfig.canonical,
-  });
-
-  return {
-    title: buildTitle(seo.title ?? "", seo.titleTemplate),
-    description: seo.description,
-    alternates: seo.canonical
-      ? { canonical: seo.canonical }
-      : undefined,
-    openGraph: {
-      title: seo.openGraph?.title ?? seo.title,
-      description: seo.openGraph?.description ?? seo.description,
-      url: seo.canonical,
-      siteName: seo.openGraph?.siteName,
-      type: (seo.openGraph?.type as "website") ?? "website",
-      locale: seo.openGraph?.locale,
-    },
-    twitter: {
-      card: (seo.twitter?.card as "summary_large_image") ?? "summary_large_image",
-      site: seo.twitter?.site,
-      creator: seo.twitter?.creator,
-    },
-  };
+  return toNextMetadata(
+    mergeSEOConfig(siteConfig, {
+      ...override,
+      ...(path && { canonical: buildCanonicalUrl(SITE_URL, path) }),
+    })
+  ) as Metadata;
 }`}</pre>
           </div>
           <p style={{ color: "#64748b", marginTop: "1rem" }}>
-            Now any page can generate metadata in one line:
+            Any page now needs just one line:
           </p>
           <div className="code-block">
             <div className="code-header">
-              <span className="code-header-title">app/about/page.tsx (simplified)</span>
+              <span className="code-header-title">app/about/page.tsx</span>
               <span className="code-header-lang">TSX</span>
             </div>
-            <pre>{`import { buildMetadata } from "@/lib/metadata";
+            <pre>{`import { buildPageMetadata } from "@/lib/seo";
 
-// One line generates all metadata!
-export const metadata = buildMetadata({
+export const metadata = buildPageMetadata({
   title: "About Us",
   description: "Learn about our team.",
 }, "/about");
@@ -575,7 +526,7 @@ export default function AboutPage() {
               <tbody>
                 <tr>
                   <td>Meta tags</td>
-                  <td><code>generateMetadata()</code> + builder functions</td>
+                  <td><code>toNextMetadata(config)</code> inside <code>generateMetadata()</code></td>
                   <td><code>{"<Head><SEOHead /></Head>"}</code></td>
                 </tr>
                 <tr>

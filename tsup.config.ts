@@ -5,6 +5,8 @@ export default defineConfig({
     index: "src/index.ts",
     schema: "src/schema/index.ts",
     components: "src/components/index.ts",
+    "adapters/nextjs": "src/adapters/nextjs/index.ts",
+    "adapters/react-router": "src/adapters/react-router/index.ts",
   },
   format: ["esm", "cjs"],
   dts: true,
