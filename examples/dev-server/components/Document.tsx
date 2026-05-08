@@ -102,6 +102,9 @@ export function Document({ children, pageConfig, schemas, activeRoute }: Documen
                     <a href="/product">Product SEO</a>
                     <a href="/faq">FAQ Schema</a>
                     <a href="/noindex">No-Index</a>
+                    <a href="/sitemap-demo">Sitemap &amp; Robots</a>
+                    <a href="/validation">SEO Validation</a>
+                    <a href="/og-image">OG Image Generation</a>
                     <a href="https://github.com/Tonmoy01/react-ssr-seo-toolkit" target="_blank" rel="noopener noreferrer">GitHub</a>
                     <a href="https://www.npmjs.com/package/react-ssr-seo-toolkit" target="_blank" rel="noopener noreferrer">npm</a>
                   </div>

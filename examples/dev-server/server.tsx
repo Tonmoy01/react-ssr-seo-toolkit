@@ -20,6 +20,9 @@ import * as productRoute from './routes/product.tsx';
 import * as faqRoute from './routes/faq.tsx';
 import * as noindexRoute from './routes/noindex.tsx';
 import * as apiRoute from './routes/api.tsx';
+import * as sitemapDemoRoute from './routes/sitemap-demo.tsx';
+import * as validationRoute from './routes/validation.tsx';
+import * as ogImageRoute from './routes/og-image.tsx';
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
@@ -42,6 +45,9 @@ const routes: Record<string, RouteModule> = {
   '/faq': faqRoute as unknown as RouteModule,
   '/noindex': noindexRoute as unknown as RouteModule,
   '/api': apiRoute as unknown as RouteModule,
+  '/sitemap-demo': sitemapDemoRoute as unknown as RouteModule,
+  '/validation': validationRoute as unknown as RouteModule,
+  '/og-image': ogImageRoute as unknown as RouteModule,
 };
 
 // ── Request handler ─────────────────────────────────────────
@@ -99,6 +105,9 @@ app.listen(PORT, () => {
   │   /product              Product SEO Demo             │
   │   /faq                  FAQ Schema Demo              │
   │   /noindex              Robots Directives            │
+  │   /sitemap-demo         Sitemap + Robots.txt         │
+  │   /validation           SEO Validation & Scoring     │
+  │   /og-image             OG Image Generation          │
   │                                                      │
   └──────────────────────────────────────────────────────┘
   `);

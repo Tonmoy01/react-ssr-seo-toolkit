@@ -6,6 +6,10 @@ import type {
   ArticleSchemaInput,
   ProductSchemaInput,
   FAQItem,
+  EventSchemaInput,
+  PersonSchemaInput,
+  RecipeSchemaInput,
+  JobPostingSchemaInput,
 } from "../types/index.js";
 
 const CONTEXT = "https://schema.org";
@@ -191,6 +195,268 @@ export function createFAQSchema(items: FAQItem[]): JSONLDBase {
       },
     })),
   };
+}
+
+// ─── Event / SportsEvent ─────────────────────────────────────
+
+export function createEventSchema(input: EventSchemaInput): JSONLDBase {
+  const isSports = !!(input.sport ?? input.homeTeam ?? input.awayTeam);
+
+  const schema: JSONLDBase = {
+    "@context": CONTEXT,
+    "@type": isSports ? "SportsEvent" : "Event",
+    name: input.name,
+    startDate: input.startDate,
+  };
+
+  if (input.endDate) schema.endDate = input.endDate;
+  if (input.description) schema.description = input.description;
+  if (input.url) schema.url = input.url;
+  if (input.images?.length) schema.image = input.images;
+
+  if (input.eventStatus) {
+    schema.eventStatus = `https://schema.org/${input.eventStatus}`;
+  }
+  if (input.eventAttendanceMode) {
+    schema.eventAttendanceMode = `https://schema.org/${input.eventAttendanceMode}`;
+  }
+
+  if (input.location) {
+    const loc = input.location;
+    if (loc.url && !loc.address) {
+      schema.location = {
+        "@type": "VirtualLocation",
+        name: loc.name,
+        url: loc.url,
+      };
+    } else {
+      const place: Record<string, unknown> = {
+        "@type": "Place",
+        name: loc.name,
+      };
+      if (loc.url) place.url = loc.url;
+      if (loc.address) {
+        place.address =
+          typeof loc.address === "string"
+            ? loc.address
+            : { "@type": "PostalAddress", ...loc.address };
+      }
+      schema.location = place;
+    }
+  }
+
+  if (input.organizer) {
+    const org: Record<string, string> = {
+      "@type": "Organization",
+      name: input.organizer.name,
+    };
+    if (input.organizer.url) org.url = input.organizer.url;
+    schema.organizer = org;
+  }
+
+  if (input.performer) {
+    const performers = Array.isArray(input.performer)
+      ? input.performer
+      : [input.performer];
+    const mapped = performers.map((p) => {
+      const entry: Record<string, string> = { "@type": "Person", name: p.name };
+      if (p.url) entry.url = p.url;
+      return entry;
+    });
+    schema.performer = mapped.length === 1 ? mapped[0] : mapped;
+  }
+
+  if (isSports) {
+    if (input.sport) schema.sport = input.sport;
+    if (input.homeTeam) {
+      const t: Record<string, string> = {
+        "@type": "SportsTeam",
+        name: input.homeTeam.name,
+      };
+      if (input.homeTeam.url) t.url = input.homeTeam.url;
+      schema.homeTeam = t;
+    }
+    if (input.awayTeam) {
+      const t: Record<string, string> = {
+        "@type": "SportsTeam",
+        name: input.awayTeam.name,
+      };
+      if (input.awayTeam.url) t.url = input.awayTeam.url;
+      schema.awayTeam = t;
+    }
+  }
+
+  return schema;
+}
+
+// ─── Person ───────────────────────────────────────────────────
+
+export function createPersonSchema(input: PersonSchemaInput): JSONLDBase {
+  const schema: JSONLDBase = {
+    "@context": CONTEXT,
+    "@type": "Person",
+    name: input.name,
+  };
+
+  if (input.url) schema.url = input.url;
+  if (input.image) schema.image = input.image;
+  if (input.jobTitle) schema.jobTitle = input.jobTitle;
+  if (input.description) schema.description = input.description;
+  if (input.email) schema.email = input.email;
+  if (input.telephone) schema.telephone = input.telephone;
+  if (input.birthDate) schema.birthDate = input.birthDate;
+  if (input.sameAs?.length) schema.sameAs = input.sameAs;
+
+  if (input.worksFor) {
+    const org: Record<string, string> = { "@type": "Organization", name: input.worksFor.name };
+    if (input.worksFor.url) org.url = input.worksFor.url;
+    schema.worksFor = org;
+  }
+
+  if (input.address) {
+    schema.address =
+      typeof input.address === "string"
+        ? input.address
+        : { "@type": "PostalAddress", ...input.address };
+  }
+
+  return schema;
+}
+
+// ─── Recipe ───────────────────────────────────────────────────
+
+export function createRecipeSchema(input: RecipeSchemaInput): JSONLDBase {
+  const schema: JSONLDBase = {
+    "@context": CONTEXT,
+    "@type": "Recipe",
+    name: input.name,
+  };
+
+  if (input.description) schema.description = input.description;
+  if (input.images?.length) schema.image = input.images;
+  if (input.datePublished) schema.datePublished = input.datePublished;
+  if (input.prepTime) schema.prepTime = input.prepTime;
+  if (input.cookTime) schema.cookTime = input.cookTime;
+  if (input.totalTime) schema.totalTime = input.totalTime;
+  if (input.recipeYield !== undefined) schema.recipeYield = String(input.recipeYield);
+  if (input.recipeCategory) schema.recipeCategory = input.recipeCategory;
+  if (input.recipeCuisine) schema.recipeCuisine = input.recipeCuisine;
+  if (input.recipeIngredient?.length) schema.recipeIngredient = input.recipeIngredient;
+  if (input.keywords?.length) schema.keywords = input.keywords.join(", ");
+
+  if (input.author) {
+    const person: Record<string, string> = { "@type": "Person", name: input.author.name };
+    if (input.author.url) person.url = input.author.url;
+    schema.author = person;
+  }
+
+  if (input.recipeInstructions?.length) {
+    schema.recipeInstructions = input.recipeInstructions.map((step) => {
+      if (typeof step === "string") {
+        return { "@type": "HowToStep", text: step };
+      }
+      const s: Record<string, unknown> = { "@type": "HowToStep", text: step.text };
+      if (step.name) s.name = step.name;
+      if (step.url) s.url = step.url;
+      if (step.image) s.image = step.image;
+      return s;
+    });
+  }
+
+  if (input.nutrition && Object.keys(input.nutrition).length) {
+    schema.nutrition = { "@type": "NutritionInformation", ...input.nutrition };
+  }
+
+  if (input.ratingValue !== undefined) {
+    const rating: Record<string, unknown> = {
+      "@type": "AggregateRating",
+      ratingValue: input.ratingValue,
+    };
+    if (input.reviewCount !== undefined) rating.reviewCount = input.reviewCount;
+    schema.aggregateRating = rating;
+  }
+
+  return schema;
+}
+
+// ─── JobPosting ───────────────────────────────────────────────
+
+export function createJobPostingSchema(input: JobPostingSchemaInput): JSONLDBase {
+  const schema: JSONLDBase = {
+    "@context": CONTEXT,
+    "@type": "JobPosting",
+    title: input.title,
+    description: input.description,
+    datePosted: input.datePosted,
+  };
+
+  if (input.validThrough) schema.validThrough = input.validThrough;
+  if (input.url) schema.url = input.url;
+  if (input.experienceRequirements) schema.experienceRequirements = input.experienceRequirements;
+  if (input.educationRequirements) {
+    schema.educationRequirements = {
+      "@type": "EducationalOccupationalCredential",
+      credentialCategory: input.educationRequirements,
+    };
+  }
+
+  if (input.employmentType) {
+    schema.employmentType = Array.isArray(input.employmentType)
+      ? input.employmentType
+      : input.employmentType;
+  }
+
+  if (input.skills) {
+    schema.skills = Array.isArray(input.skills) ? input.skills.join(", ") : input.skills;
+  }
+
+  const org: Record<string, unknown> = {
+    "@type": "Organization",
+    name: input.hiringOrganization.name,
+  };
+  if (input.hiringOrganization.sameAs) org.sameAs = input.hiringOrganization.sameAs;
+  if (input.hiringOrganization.logo) org.logo = input.hiringOrganization.logo;
+  schema.hiringOrganization = org;
+
+  if (input.remote) {
+    schema.jobLocationType = "TELECOMMUTE";
+  }
+
+  if (input.jobLocation) {
+    schema.jobLocation = {
+      "@type": "Place",
+      address: { "@type": "PostalAddress", ...input.jobLocation },
+    };
+  }
+
+  if (input.baseSalary) {
+    const { currency, value, unitText = "YEAR" } = input.baseSalary;
+    const monetaryAmount: Record<string, unknown> = {
+      "@type": "MonetaryAmount",
+      currency,
+    };
+    if (typeof value === "number") {
+      monetaryAmount.value = value;
+    } else {
+      monetaryAmount.value = {
+        "@type": "QuantitativeValue",
+        minValue: value.minValue,
+        maxValue: value.maxValue,
+        unitText,
+      };
+    }
+    schema.baseSalary = monetaryAmount;
+  }
+
+  if (input.identifier) {
+    schema.identifier = {
+      "@type": "PropertyValue",
+      name: input.identifier.name,
+      value: input.identifier.value,
+    };
+  }
+
+  return schema;
 }
 
 // ─── Schema composition ───────────────────────────────────────
