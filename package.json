@@ -1,6 +1,6 @@
 {
   "name": "react-ssr-seo-toolkit",
-  "version": "1.0.5",
+  "version": "1.2.0",
   "description": "Framework-agnostic SEO utilities, metadata builders, structured data helpers, and React components for SSR applications",
   "keywords": [
     "seo",
@@ -18,7 +18,13 @@
     "schema-org",
     "breadcrumb",
     "hreflang",
-    "server-side-rendering"
+    "server-side-rendering",
+    "sitemap",
+    "robots-txt",
+    "seo-validation",
+    "og-image",
+    "seo-score",
+    "social-preview"
   ],
   "author": "tonmoy1996",
   "license": "MIT",
@@ -63,6 +69,36 @@
       "require": {
         "types": "./dist/components.d.cts",
         "default": "./dist/components.cjs"
+      }
+    },
+    "./sitemap": {
+      "import": {
+        "types": "./dist/sitemap.d.ts",
+        "default": "./dist/sitemap.js"
+      },
+      "require": {
+        "types": "./dist/sitemap.d.cts",
+        "default": "./dist/sitemap.cjs"
+      }
+    },
+    "./validation": {
+      "import": {
+        "types": "./dist/validation.d.ts",
+        "default": "./dist/validation.js"
+      },
+      "require": {
+        "types": "./dist/validation.d.cts",
+        "default": "./dist/validation.cjs"
+      }
+    },
+    "./og": {
+      "import": {
+        "types": "./dist/og.d.ts",
+        "default": "./dist/og.js"
+      },
+      "require": {
+        "types": "./dist/og.d.cts",
+        "default": "./dist/og.cjs"
       }
     },
     "./adapters/nextjs": {
