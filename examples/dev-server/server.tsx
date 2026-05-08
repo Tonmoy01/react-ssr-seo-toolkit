@@ -80,7 +80,7 @@ app.get('/{*splat}', (req, res) => {
 
 export default app;
 
-app.listen(PORT, () => {
+if (!process.env.VERCEL) app.listen(PORT, () => {
   console.log(`
   ┌──────────────────────────────────────────────────────┐
   │                                                      │
