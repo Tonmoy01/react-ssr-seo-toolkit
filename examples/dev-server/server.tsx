@@ -78,6 +78,8 @@ app.get('/{*splat}', (req, res) => {
   res.send(`<!DOCTYPE html>${html}`);
 });
 
+export default app;
+
 app.listen(PORT, () => {
   console.log(`
   ┌──────────────────────────────────────────────────────┐

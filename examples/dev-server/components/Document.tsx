@@ -17,6 +17,9 @@ const navLinks = [
   { href: "/multi-page", label: "Multi-Page" },
   { href: "/recipes", label: "Recipes" },
   { href: "/common-mistakes", label: "Mistakes & FAQ" },
+  { href: "/sitemap-demo", label: "Sitemap" },
+  { href: "/validation", label: "Validation" },
+  { href: "/og-image", label: "OG Image" },
   { href: "/api", label: "API Reference" },
 ];
 
